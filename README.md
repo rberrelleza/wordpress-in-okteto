@@ -42,14 +42,14 @@ deployment "wordpress" successfully rolled out
 
 ![wordpress endpoints](wordpress.png)
 
-8.You'll  see a WordPress set up page similar to one below.
+8. You'll  see a WordPress set up page similar to one below. Complete the installation and your Wordpress instance will be ready to go!
 ![wordpress install](wordpress-install.png)
 
 > Do not leave your WordPress installation on this page. If other person finds it, they can set up a website on your instance and use it to serve malicious content. Finish the installation by creating a username and password or delete your instance.
 
 ## How does it work?
 
-I made two changes to [the sample deployments](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/) to make it work in Okteto Cloud. 
+I made two changes to [the sample wordpress-deployment.yaml](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/) to make it work with Okteto Cloud. 
 
 1. Change the service type from `LoadBalancer` to ClusterIP [on the `wordpress` service](wordpress-deployment.yaml#L15). Okteto Cloud doesn't support the LoadBalancer service type. Instead,it uses ClusterIP and automatically configures the internal network and creates the necessary  endpoints for your application.
 
