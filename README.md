@@ -1,6 +1,6 @@
-# wordpress-in-okteto
+# Wordpress in Okteto
 
-Run a Wordpress instance directly in Okteto
+Run a Wordpress instance directly in [Okteto Cloud](https://cloud.okteto.com)
 
 > This is adapted from the sample available at https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 
@@ -28,23 +28,31 @@ persistentvolumeclaim/mysql-pv-claim created
 persistentvolumeclaim/wp-pv-claim created
 ```
 
-6. Verify that the resources were correctly created
+6. Wait for the deployments to rollout correctly.
 
 ```
- kubectl get pod
- ```
+kubectl rollout status deployment wordpress
+```
 
- ```
- NAME                               READY   STATUS    RESTARTS   AGE
-wordpress-78c9879d85-s5c6z         1/1     Running   0          11m
-wordpress-mysql-868c686975-ld64c   1/1     Running   0          11m
+```
+deployment "wordpress" successfully rolled out
 ```
 
 7. Go back to https://cloud.okteto.com in your browser and click on the endpoint of your Wordpress instance.
 
 ![wordpress endpoints](wordpress.png)
 
-8.You'll  see a WordPress set up page similar to one below.
+8. You'll  see a WordPress set up page similar to one below. Complete the installation and your Wordpress instance will be ready to go!
 ![wordpress install](wordpress-install.png)
 
 > Do not leave your WordPress installation on this page. If other person finds it, they can set up a website on your instance and use it to serve malicious content. Finish the installation by creating a username and password or delete your instance.
+
+## How does it work?
+
+I made two changes to [the sample wordpress-deployment.yaml](https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/) to make it work with Okteto Cloud. 
+
+1. Change the service type from `LoadBalancer` to ClusterIP [on the `wordpress` service](wordpress-deployment.yaml#L15). Okteto Cloud doesn't support the LoadBalancer service type. Instead,it uses ClusterIP and automatically configures the internal network and creates the necessary  endpoints for your application.
+
+1. Add the `dev.okteto.com/auto-ingress: "true"` [annotation to the `wordpress` service](wordpress-deployment.yaml#L6). This instructs Okteto Cloud to create a public HTTPS endpoint for the `wordpress` service. The URL of the endpoint is displayed in the Okteto Cloud UI. With this, you can access your Wordpress instance directly through the public network, just as your users would.
+
+
