@@ -4,8 +4,8 @@ Run a Wordpress instance directly in Okteto
 
 > This is adapted from the sample available at https://kubernetes.io/docs/tutorials/stateful-application/mysql-wordpress-persistent-volume/
 
-1. Login to `cloud.okteto.com`
-1. Download your new Kubernetes credentials
+1. Login to https://cloud.okteto.com
+1. Download your Kubernetes credentials by clicking on the `Credentials` button in the far left of the screen.
 1. On a terminal shell, set the `KUBECONFIG` env var to the location of the downloaded credentials credentials. 
         export KUBECTL=$HOME/Downloads/okteto-kube.config
 1. Clone this repo
